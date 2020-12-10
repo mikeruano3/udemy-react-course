@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
+import AuthContext from '../../context/auth-context';
 
 const Cockpit = ( props ) => {
+
+    const toogleBtnRef = useRef(null)
+    const authContext = useContext(AuthContext);
+
     // Initial state
     useEffect(() => {
-        alert('First time?')
+        //alert('First time?')
+        console.log('First time?');
+        toogleBtnRef.current.click()
         return () =>{
             console.log('[Cockpit.js] cleanup work');
         }
@@ -23,10 +30,10 @@ const Cockpit = ( props ) => {
     })
 
     const assignedClasses = []
-    if(props.persons.length <= 2){
+    if(props.personsLength <= 2){
         assignedClasses.push('red')
     }
-    if(props.persons.length <= 1){
+    if(props.personsLength <= 1){
         assignedClasses.push('bold')
     }
     
@@ -55,13 +62,19 @@ const Cockpit = ( props ) => {
         <div>
             <h1>HI!! I'm a React App</h1>
             <p className={assignedClasses}>This is really working!</p>
-            <button onClick={props.tooglePerson} style={style}>Toogle</button>
+            <button onClick={props.tooglePerson} style={style} ref={toogleBtnRef}>Toogle</button>
             { 
                 props.showPersonState && props.persons
             }
+            {
+                <AuthContext.Consumer>
+                    {context => <button onClick={context.login} style={style}>Log In</button>}
+                </AuthContext.Consumer>
+            }
+            <button onClick={authContext.login} style={style}>Log In useContext</button>
             <p>{props.otherState}</p>
         </div>
     )
 }
 
-export default Cockpit
+export default React.memo(Cockpit)

@@ -6,11 +6,12 @@ class Persons extends Component {
     // componentWillReceiveProps(props) {
     //     console.log('[Person.js] componentWillReceiveProps', props);
     // }
-
+    /*
     static getDerivedStateFromProps(props, state) {
         console.log('[Person.js] getDerivedStateFromProps')
         return state
     }
+    */
 
     shouldComponentUpdate(nextProps, nextState){
         console.log('[Persons.js] shouldComponentUpdate');
@@ -43,7 +44,9 @@ class Persons extends Component {
                 changed={this.props.change.bind(this, person.id)}
                 name={person.name}
                 age={person.age} 
-                key={person.id}/>
+                key={person.id}
+                isAuth={this.props.isAuthenticated}
+                />
         })
     }    
 }
