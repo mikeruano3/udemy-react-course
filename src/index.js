@@ -5,32 +5,16 @@ import './index.css';
 import App from './App';
 
 import { createStore } from 'redux'
+import allReducers from './reducers'
+import { Provider } from 'react-redux'
 
-const increment = (data) => {
-    return { type: 'INCREMENT', payload: data }
-}
+const store = createStore(
+  allReducers, 
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
-const decrement = () => {
-    return { type: 'DECREMENT' }
-}
-
-const counterReducer = (state = 0, action ) =>{
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + action.payload
-        case 'DECREMENT':
-            return state - 1
-        default:
-            return state
-    }
-}
-
-let store = createStore(counterReducer)
-
-store.subscribe(()=>{
-    console.log(store.getState())
-})
-
-store.dispatch(increment(5))
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>
+    , document.getElementById('root'));
