@@ -1,21 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 
-import { Provider } from 'react-redux'
-import { combineReducers, createStore } from 'redux'
+import { createStore } from 'redux'
 
-import counterReducer from './store/reducers/counter'
-import resultReducer from './store/reducers/result'
+const increment = (data) => {
+    return { type: 'INCREMENT', payload: data }
+}
 
-const rootReducer = combineReducers({
-    ctr: counterReducer,
-    res: resultReducer
+const decrement = () => {
+    return { type: 'DECREMENT' }
+}
+
+const counterReducer = (state = 0, action ) =>{
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + action.payload
+        case 'DECREMENT':
+            return state - 1
+        default:
+            return state
+    }
+}
+
+let store = createStore(counterReducer)
+
+store.subscribe(()=>{
+    console.log(store.getState())
 })
 
-const store = createStore(rootReducer)
+store.dispatch(increment(5))
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(<App />, document.getElementById('root'));
