@@ -1,18 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import Ingredients from './components/Ingredients/Ingredients';
-import Auth from './components/Auth';
-import { AuthContext } from './context/auth-context'
+import Navigation from './components/Nav/Navigation';
+import ProductsPage from './containers/Products';
+import FavoritesPage from './containers/Favorites';
 
 const App = props => {
-  const authContext = useContext(AuthContext);
-
-  let content = <Auth />
-  if (authContext.isAuth) {
-     content = <Ingredients />
-  }
-
-  return content;
+  return (
+    <React.Fragment>
+      <Navigation />
+      <main>
+        <Route path="/" component={ProductsPage} exact />
+        <Route path="/favorites" component={FavoritesPage} />
+      </main>
+    </React.Fragment>
+  );
 };
 
 export default App;
