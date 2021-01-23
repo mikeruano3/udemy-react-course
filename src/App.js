@@ -1,52 +1,15 @@
-import React, { Component, Suspense } from 'react';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
 
-//import Posts from './containers/Posts';
-import User from './containers/User';
-import Welcome from './containers/Welcome';
-
-const Posts = React.lazy(()=> import('./containers/Posts'))
+import Counter from './containers/Counter/Counter';
+import './App.css';
 
 class App extends Component {
-  state = { showPosts: false }
-
-  modeHandler = () => {
-    this.setState(prevState => {
-      return { showPosts: !prevState.showPosts }  
-    })
-  }
-
+  
   render() {
     return (
-      /*
-      <React.Fragment>
-        <button onClick={this.modeHandler}>Toogle Mode</button>
-        { this.state.showPosts ? (
-            <Suspense fallback={<div>Loading...</div>}>
-              <Posts/>
-            </Suspense>
-          ) : <User/> 
-        }
-      </React.Fragment>
-      */
-      
-      <BrowserRouter basename="/my-app">
-        <React.Fragment>
-          <nav>
-            <NavLink to="/user">User Page</NavLink> |&nbsp;
-            <NavLink to="/posts">Posts Page</NavLink>
-          </nav>
-          <Route path="/" component={Welcome} exact />
-          <Route path="/user" component={User} />
-          {//<Route path="/posts" component={Posts} />
-          }
-          <Route path="/posts" render={() => (
-            <Suspense fallback={<div>Loading...</div>}>
-              <Posts/>
-            </Suspense>
-            )} />
-        </React.Fragment>
-      </BrowserRouter>
+      <div className="App">
+       <Counter />
+      </div>
     );
   }
 }
