@@ -1,4 +1,5 @@
-import * as actionTypes from '../actions'
+import * as actionTypes from '../actions/actionTypes'
+import { updateObject } from '../utility'
 
 const initialState = {
     counterHandler: 0
@@ -21,10 +22,7 @@ const reducer = (state = initialState, action) => {
                 counterHandler: state.counterHandler + action.val
             }
         case actionTypes.SUBTRACT:
-            return {
-                ...state,
-                counterHandler: state.counterHandler - action.val
-            }
+            return updateObject(state, { counterHandler: state.counterHandler - action.val })
         default:
             return state
     }

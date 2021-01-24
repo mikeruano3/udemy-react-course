@@ -1,7 +1,15 @@
-import * as actionTypes from '../actions'
+import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
     results: []
+}
+
+const deleteResult = (state, action) => {
+    const updatedArray = state.results.filter((result) => result.id !== action.strResultId)
+    return {
+        ...state,
+        results: updatedArray
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,11 +23,7 @@ const reducer = (state = initialState, action) => {
             //const id = 2
             //const newArray = [...state.results]
             //newArray.splice(id, 1)
-            const updatedArray = state.results.filter((result) => result.id !== action.strResultId)
-            return {
-                ...state,
-                results: updatedArray
-            }
+            return deleteResult(state, action)
         default:
             return state
     }
