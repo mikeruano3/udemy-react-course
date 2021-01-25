@@ -9,24 +9,15 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import * as actionTypes from '../../store/actions'
+import * as burgerBuilderActions from '../../store/actions/index'
 
 class BurguerBuilder extends Component{
     state = {
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasing: false
     }
 
     componentDidMount() {
-        /*
-        axios.get('https://react-my-burger-ed689-default-rtdb.firebaseio.com/ingredients.json')
-            .then(response => {
-                this.setState({ingredients: response.data})
-            }).catch(error => {
-                this.setState({error: true})
-            })
-        */
+        this.props.onInitIngredients()
     }
 
     updatePurchaseState (updatedIngredients) {
@@ -63,7 +54,7 @@ class BurguerBuilder extends Component{
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         let orderSummary = null
-        let burger =  this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner/>
+        let burger =  this.props.error ? <p>Ingredients can't be loaded</p> : <Spinner/>
 
         if(this.props.ings){
             burger = (
@@ -103,14 +94,16 @@ class BurguerBuilder extends Component{
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     }
 }
 
 const mapDispatchToProps = dispatchEvent => {
     return {
-        onIngredientAdded: (ingredientName) => dispatchEvent({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingredientName }),
-        onIngredientRemoved: (ingredientName) => dispatchEvent({ type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingredientName }),
+        onIngredientAdded: (ingredientName) => dispatchEvent(burgerBuilderActions.addIngredient(ingredientName)),
+        onIngredientRemoved: (ingredientName) => dispatchEvent(burgerBuilderActions.removeIngredient(ingredientName)),
+        onInitIngredients: () => dispatchEvent(burgerBuilderActions.initIngredients()),
     }
 }
 
