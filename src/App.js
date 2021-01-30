@@ -1,26 +1,29 @@
-import React, { Component } from 'react';
-import Layout from './hoc/Layout/Layout'
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
-import Checkout from './containers/Checkout/Checkout'
-import Orders from './containers/Orders/Orders'
-import { Route, Switch } from 'react-router-dom'
-import Auth from './containers/Auth/Auth'
+import React, { Component } from 'react'
+import { Link, Route } from 'react-router-dom' 
+
+import Users from './containers/Users'
+import Pizza from './containers/Pizza'
+import asyncComponent from './hoc/asyncComponent'
+
+const AsyncPizza = asyncComponent(() => {
+    return import('./containers/Pizza.js')
+})
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-        <Layout>
-          <Switch>
-            <Route path="/orders" component={Orders} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/auth" component={Auth} />
-            <Route path="/" component={BurgerBuilder} />
-          </Switch>
-        </Layout>
-      </div>
-    );
-  }
+    render () {
+        return (
+            <div>
+                <div>
+                    <Link to="/">Users</Link>
+                    <Link to="/pizza">Pizza</Link>
+                </div>
+                <div>
+                    <Route path="/" exact component={Users} />
+                    <Route path="/pizza" exact component={AsyncPizza} />
+                </div>
+            </div>
+        )
+    }
 }
 
-export default App;
+export default App
