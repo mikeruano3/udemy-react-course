@@ -1,48 +1,16 @@
 {
   "name": "react-complete-guide",
-  "version": "1.0.0",
-  "description": "webpack",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo 'lol'",
-    "serve": "webpack-dev-server",
-    "start": "webpack serve --config webpack.config.js --progress --profile --watch --content-base src/",
-    "build:prod": "webpack --config webpack.config.prod.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mikeruano3/udemy-react-course.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "browserslist": "> 1%, last 2 versions",
-  "bugs": {
-    "url": "https://github.com/mikeruano3/udemy-react-course/issues"
-  },
-  "homepage": "https://github.com/mikeruano3/udemy-react-course#readme",
-  "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
-    "@babel/preset-stage-2": "^7.8.3",
-    "autoprefixer": "^10.2.4",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^5.0.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^4.5.1",
-    "postcss-loader": "^4.2.0",
-    "style-loader": "^2.0.0",
-    "url-loader": "^4.1.1",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^4.4.0",
-    "webpack-dev-server": "^3.11.2"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "core-js": "^3.8.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "regenerator-runtime": "^0.13.7"
+    "react-scripts": "1.0.13"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }

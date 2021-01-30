@@ -1,29 +1,23 @@
-import React, { Component } from 'react'
-import { Link, Route } from 'react-router-dom' 
+import React, { Component } from "react";
 
-import Users from './containers/Users'
-import Pizza from './containers/Pizza'
-import asyncComponent from './hoc/asyncComponent'
-
-const AsyncPizza = asyncComponent(() => {
-    return import('./containers/Pizza.js')
-})
+import "./App.css";
+import Modal from "./components/Modal/Modal";
+import Backdrop from "./components/Backdrop/Backdrop";
+import List from "./components/List/List";
 
 class App extends Component {
-    render () {
-        return (
-            <div>
-                <div>
-                    <Link to="/">Users</Link>
-                    <Link to="/pizza">Pizza</Link>
-                </div>
-                <div>
-                    <Route path="/" exact component={Users} />
-                    <Route path="/pizza" exact component={AsyncPizza} />
-                </div>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="App">
+        <h1>React Animations</h1>
+        <Modal />
+        <Backdrop />
+        <button className="Button">Open Modal</button>
+        <h3>Animating Lists</h3>
+        <List />
+      </div>
+    );
+  }
 }
 
-export default App
+export default App;
