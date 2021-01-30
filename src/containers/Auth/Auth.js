@@ -8,6 +8,7 @@ import axios from '../../axios-orders'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions/auth'
 import Modal from '../../components/UI/Modal/Modal'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 class Auth extends Component {
     state = {
@@ -90,7 +91,7 @@ class Auth extends Component {
     }
 
     errorConfirmedHandler = () => {
-        this.props.authStart()
+        this.props.authReset()
     }
 
     render() {
@@ -102,7 +103,7 @@ class Auth extends Component {
             })
         }
 
-        const form = formElementArray.map(formElement => (
+        let form = formElementArray.map(formElement => (
             <Input
                 key={formElement.id}
                 elementType={formElement.config.elementType}
@@ -114,6 +115,10 @@ class Auth extends Component {
                 changed={(event) => this.inputChangedHandler(event, formElement.id)} />
         ))
 
+        if(this.props.loading === true){
+            form = <Spinner />
+        }
+
         return (
             <div className={classes.Auth}>
                 <form onSubmit={this.submitHandler}>
@@ -123,11 +128,15 @@ class Auth extends Component {
                 <Button 
                     clicked={this.switchAuthModeHandler}
                     btnType="Danger">SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
-                <Modal show={this.props.authError} modalClosed={this.errorConfirmedHandler}>
-                    <p>
-                        {String(this.props.authError)}
-                    </p>
-                </Modal>
+                    {
+                        this.props.error && 
+                        <Modal show={true} modalClosed={this.errorConfirmedHandler}>
+                            <p>
+                                {this.props.error.message}
+                            </p>
+                        </Modal>
+                    }
+                
             </div>
         )
     }
@@ -135,15 +144,15 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
     return {
-        authError: state.auth.error,
-        tokenData: state.auth.tokenData
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
-        authStart: () => dispatch(actions.authStart())
+        authReset: () => dispatch(actions.authReset())
     }
 }
 

@@ -13,6 +13,6 @@ export {
 
  export { 
     auth,
-    authStart
+    authReset
  } from './auth'
 
