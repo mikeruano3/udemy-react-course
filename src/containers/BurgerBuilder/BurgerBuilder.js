@@ -11,7 +11,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import * as actions from '../../store/actions/index'
 
-class BurguerBuilder extends Component{
+export class BurgerBuilder extends Component{
     state = {
         purchasing: false
     }
@@ -118,4 +118,4 @@ const mapDispatchToProps = dispatchEvent => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurguerBuilder, axios))
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios))
