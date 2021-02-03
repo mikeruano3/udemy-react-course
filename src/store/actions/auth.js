@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import axios from 'axios'
+//import axios from 'axios'
 
 export const authStart = () => {
     return {
@@ -29,24 +29,41 @@ export const authReset = () => {
 }
 
 export const logout = () => {
+    /*
     localStorage.removeItem('token')
     localStorage.removeItem('expirationDate')
     localStorage.removeItem('userId')
+    */
     return {
-        type: actionTypes.AUTH_LOGOUT
+        //type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.AUTH_INITIATE_LOGOUT
     }
 }
 
 export const checkAuthTimeOut = (expirationTime) => {
     console.log(expirationTime)
-    return dispatch => {
+    /*return dispatch => {
         setTimeout(() => {
             dispatch(logout())
         }, Number(expirationTime) * 1000)
+    }*/
+
+    return {
+        type: actionTypes.AUTH_CHECK_TIMEOUT,
+        expirationTime: expirationTime
     }
+
 }
 
 export const auth = (email, password, isSignup) => {
+    return {
+        type: actionTypes.AUTH_USER,
+        email,
+        password,
+        isSignup,
+    }
+
+    /*
     return dispatch => {
         dispatch(authStart())
         const authData = {   
@@ -70,7 +87,7 @@ export const auth = (email, password, isSignup) => {
             .catch(err => {
                 dispatch(authFail(err.message))
             })
-    }
+    }*/
 }
 
 export const setAuthRedirectPath = (path) => {
@@ -81,6 +98,10 @@ export const setAuthRedirectPath = (path) => {
 }
 
 export const authCheckState = () => {
+    return {
+        type: actionTypes.AUTH_CHECK_STATE
+    }
+    /*
     return dispatch => {
         const token = localStorage.getItem('token')
         if(!token){
@@ -95,5 +116,11 @@ export const authCheckState = () => {
                 dispatch(checkAuthTimeOut((expirationDate.getTime() - new Date().getTime()) / 1000))
             }
         }
+    }*/
+}
+
+export const logoutSucceed = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
     }
 }
