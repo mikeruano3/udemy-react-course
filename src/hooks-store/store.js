@@ -5,7 +5,7 @@ let globalState = {}
 let listeners = []
 let actions = {}
 
-export const useStore = () => {
+export const useStore = (shouldListen = true) => {
     const setState = useState(globalState)[1]
 
     // Executes actions in the array
@@ -19,14 +19,19 @@ export const useStore = () => {
         }
     }
 
-    // Adds a listener when the component where this is used is mounted
+
     useEffect(() => {
-        listeners.push(setState)
+        // Adds a listener when the component where this store is used is mounted
+        if (shouldListen) {
+            listeners.push(setState)
+        }
         // Removes the listener when the component where this is used is UNmounted
         return () => {
-            listeners = listeners.filter(li => li !== setState)
+            if (shouldListen) {
+                listeners = listeners.filter(li => li !== setState)
+            }
         }
-    }, [setState])
+    }, [setState, shouldListen])
 
     // As if we were using the useReducer hook
     return [globalState, dispatch]
